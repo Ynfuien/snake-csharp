@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Snake
 {
@@ -76,19 +77,9 @@ namespace Snake
                 int score = snake.GetSize() - _snakeSize;
 
                 Font font = new Font("Arial", scale);
-                StringFormat format = new StringFormat();
-                format.LineAlignment = StringAlignment.Center;
-                format.Alignment = StringAlignment.Center;
-                format.Trimming = StringTrimming.None;
-
-                g.DrawString("Game over!", font, new SolidBrush(_colorGameover), new Point(_size / 2, _size / 2 - (scale * 2)), format);
-
-                string scoreString = $"Score: {score}";
-                Size textSize = TextRenderer.MeasureText(scoreString, font);
-                g.DrawString(scoreString, font, new SolidBrush(_colorScoreNumber), new Point((_size - textSize.Width) / 2, _size / 2 - (int)(scale * 1.5)));
-
-                g.DrawString("Score:", font, new SolidBrush(_colorScore), new Point((_size - textSize.Width) / 2, _size / 2 - (int)(scale * 1.5)));
-
+                RenderText(g, "Game over!", font, _colorGameover, (int) (_size / 2), (int) (_size / 2 - (scale * 2.3)));
+                RenderText(g, $"Score: {score}", font, _colorScoreNumber, (int) (_size / 2), (int) (_size / 2 - scale));
+                RenderText(g, $"Score: {new string(' ', score.ToString().Length * 2)}", font, _colorScore, (int) (_size / 2), (int) (_size / 2 - scale));
 
                 border.Render(g, _colorBorder);
                 return;
@@ -98,6 +89,12 @@ namespace Snake
             snake.Render(g, _colorSnakeHead, _colorSnakeBody);
             berry.Render(g, _colorBerry);
             border.Render(g, _colorBorder);
+        }
+
+        // Renders centered text
+        private void RenderText(Graphics g, string text, Font font, Color color, int x, int y) {
+            Size textSize = TextRenderer.MeasureText(text, font);
+            g.DrawString(text, font, new SolidBrush(color), new Point(x - (textSize.Width / 2), y - (textSize.Height / 2)));
         }
 
         private void SnakeForm_KeyDown(object sender, KeyEventArgs e)
