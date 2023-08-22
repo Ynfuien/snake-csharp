@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Snake
 {
@@ -136,7 +135,6 @@ namespace Snake
             {
                 // Game over
                 gameOver = true;
-                //canvas.Invalidate();
                 canvas.Refresh();
                 gameTimer.Stop();
                 return;
@@ -150,7 +148,6 @@ namespace Snake
             }
 
             // Render everything to user
-            //canvas.Invalidate();
             canvas.Refresh();
         }
 
