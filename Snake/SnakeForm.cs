@@ -27,8 +27,8 @@ namespace Snake
 
         #region Colors
         private Color _colorBackground = Color.FromArgb(36, 36, 36);
-        private Color _colorSnakeHead = Color.FromArgb(255, 170, 0);
-        private Color _colorSnakeBody = Color.FromArgb(255, 255, 85);
+        private Color _colorSnakeHead = Color.FromArgb(103, 36, 117);
+        private Color _colorSnakeBody = Color.FromArgb(154, 74, 148);
         private Color _colorBerry = Color.FromArgb(255, 85, 85);
         private Color _colorBorder = Color.FromArgb(85, 85, 85);
         private Color _colorGameover = Color.FromArgb(255, 85, 85);
@@ -141,7 +141,7 @@ namespace Snake
             }
 
             // Check if snake got the berry
-            if (snake.Contains(berry.position))
+            if (snake.ContainsBerry(berry))
             {
                 berry = new Berry(snake);
                 snake.Grow();
@@ -278,6 +278,13 @@ namespace Snake
                 }
 
                 return false;
+            }
+
+            // Separate method for checking for berry,
+            // because only head pixel can move onto berry position
+            public bool ContainsBerry(Berry berry)
+            {
+                return headPixel.Equals(berry.position);
             }
 
             public enum Direction
